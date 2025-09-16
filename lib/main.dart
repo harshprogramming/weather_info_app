@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const WeatherInfoApp());
@@ -26,37 +27,53 @@ class WeatherHome extends StatefulWidget {
 
 class _WeatherHomeState extends State<WeatherHome> {
   final TextEditingController _cityCtrl = TextEditingController();
+  String? city;
+  int? tempC;
+  String? condition;
 
-  void _fetchWeather() {
-    setState(() {});
+  final _rng = Random();
+  final _conditions = ["Sunny", "Cloudy", "Rainy"];
+
+  void _fetchToday() {
+    final input = _cityCtrl.text.trim();
+    if (input.isEmpty) return;
+    setState(() {
+      city = input;
+      tempC = 15 + _rng.nextInt(16);
+      condition = _conditions[_rng.nextInt(_conditions.length)];
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Today's Weather")),
+      appBar: AppBar(title: const Text('Today\'s Weather')),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
             TextField(
               controller: _cityCtrl,
               decoration: const InputDecoration(
                 labelText: "City",
-                hintText: "Enter a city name",
+                hintText: "Enter a city",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: _fetchWeather,
+            FilledButton(
+              onPressed: _fetchToday,
               child: const Text("Fetch Weather"),
             ),
             const SizedBox(height: 24),
-            const Text("City: ---"),
-            const Text("Temperature: ---"),
-            const Text("Condition: ---"),
+            if (city != null && tempC != null && condition != null) ...[
+              Card(
+                child: ListTile(
+                  title: Text("$tempC°C  •  $condition"),
+                  subtitle: Text(city!),
+                ),
+              ),
+            ],
           ],
         ),
       ),
