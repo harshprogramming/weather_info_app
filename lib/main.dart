@@ -4,12 +4,15 @@ void main() => runApp(const WeatherInfoApp());
 
 class WeatherInfoApp extends StatelessWidget {
   const WeatherInfoApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Simple Weather App',
+      title: 'Weather Information',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+        useMaterial3: true,
+      ),
       home: const WeatherHome(),
     );
   }
@@ -17,7 +20,6 @@ class WeatherInfoApp extends StatelessWidget {
 
 class WeatherHome extends StatefulWidget {
   const WeatherHome({super.key});
-
   @override
   State<WeatherHome> createState() => _WeatherHomeState();
 }
@@ -25,22 +27,14 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   final TextEditingController _cityCtrl = TextEditingController();
 
-  String city = "---";
-  String temperature = "---";
-  String condition = "---";
-
   void _fetchWeather() {
-    setState(() {
-      city = _cityCtrl.text;
-      temperature = "Temperature Placeholder";
-      condition = "Condition Placeholder";
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Weather Info")),
+      appBar: AppBar(title: const Text("Today's Weather")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -60,9 +54,9 @@ class _WeatherHomeState extends State<WeatherHome> {
               child: const Text("Fetch Weather"),
             ),
             const SizedBox(height: 24),
-            Text("City: $city"),
-            Text("Temperature: $temperature"),
-            Text("Condition: $condition"),
+            const Text("City: ---"),
+            const Text("Temperature: ---"),
+            const Text("Condition: ---"),
           ],
         ),
       ),
