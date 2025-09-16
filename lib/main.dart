@@ -71,6 +71,7 @@ class _WeatherHomeState extends State<WeatherHome> {
                 child: ListTile(
                   title: Text("$tempC°C  •  $condition"),
                   subtitle: Text(city!),
+                  
                 ),
               ),
             ],
